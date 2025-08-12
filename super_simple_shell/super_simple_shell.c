@@ -52,7 +52,8 @@ int main(void)
 
 		if (fork_return == 0) /* code for child process */
 		{
-			argv[] = {buffer, NULL};/*initialise array*/
+			argv[0] = buffer; /* assign array values */
+			argv[1] = NULL;
 
 			 /* call execve and check for failure */
 			if (execve(argv[0], argv, NULL) == -1)
@@ -64,9 +65,9 @@ int main(void)
 		else
 		{
 			wait(&status); /* wait for child process to end */
-			free(buffer); /* free user input in buffer */
 		}
 
 	}
+	free(buffer); /* free user input in buffer */
 	return (0);
 }
