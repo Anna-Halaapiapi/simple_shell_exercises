@@ -15,7 +15,6 @@
 
 int main(void)
 {
-	char *argv[]; /* argv array */
 	int status; /*  status for wait */
 	pid_t fork_return; /* store return from fork */
 	char *buffer = NULL; /* store input from user */
@@ -47,19 +46,21 @@ int main(void)
 
 		if (fork_return == 0) /* code for child process */
 		{
-			argv[0] = buffer; /* assign user input to argv[0] */
+			char *argv[2] = {buffer, NULL};/*initialise array*/
+
 			 /* call execve and check for failure */
-			if (execve(argv[0], NULL, NULL) == -1)
+			if (execve(argv[0], argv, NULL) == -1)
 			{
 				perror("Error - execve failed");/*print error */
 				_exit(1); /* exit program */
 			}
+		}
 		else
 		{
 			wait(&status); /* wait for child process to end */
 			free(buffer); /* free user input in buffer */
 		}
-		}
+
 	}
 	return (0);
 }
