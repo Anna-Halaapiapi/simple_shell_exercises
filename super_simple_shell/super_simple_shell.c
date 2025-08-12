@@ -20,6 +20,7 @@ int main(void)
 	char *buffer = NULL; /* store input from user */
 	size_t buffsize = 0; /* store size of buffer */
 	ssize_t numsread; /*store num of chars read by getline or -1(EOF/err)*/
+	char *argv[2]; /* argv array */
 
 	while (1) /* infinite loop */
 	{
@@ -35,6 +36,11 @@ int main(void)
 			return (1); /* exit program */
 		}
 
+		if (buffer[numsread - 1] == '\n')/* if newline at end */
+		{
+			buffer[numsread - 1] = '\0';/*replace /n with nullterm*/
+		}
+
 		fork_return = fork(); /* create child process */
 
 		if (fork_return == -1) /* check if fork failed */
@@ -46,7 +52,7 @@ int main(void)
 
 		if (fork_return == 0) /* code for child process */
 		{
-			char *argv[2] = {buffer, NULL};/*initialise array*/
+			argv[] = {buffer, NULL};/*initialise array*/
 
 			 /* call execve and check for failure */
 			if (execve(argv[0], argv, NULL) == -1)
