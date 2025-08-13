@@ -65,11 +65,12 @@ node_t *build_list(void)
 	node_t *head = NULL; /* node for head of list */
 	node_t *tail = NULL; /* node for end of list */
 	node_t *newnode = NULL; /* node to create new node */
+	int i = 0; /* loop counter */
 
 	if (envpath == NULL)
 	{
 		printf("Error");
-		return (1);
+		return (NULL);
 	}
 
 	path_array = splitstring(envpath); /* split PATH values into an array */
@@ -87,7 +88,7 @@ node_t *build_list(void)
 
 		/* set node vals */
 		newnode->dir = strdup(path_array[i]);
-		newnode->next = NULL
+		newnode->next = NULL;
 
 			if (head == NULL)
 			{
