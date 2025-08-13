@@ -87,19 +87,19 @@ int main(int argc, char **argv)
       /* add / to end */
       strcat(full_path, "/");
       /* add file name */
-      strcat(full_path, argv[1]);
+      strcat(full_path, argv[arg_i]);
 
       /* check if file exists */
       if (stat(full_path, &st) == 0)
 	{
 	  /* print found and full path */
-	  printf("File found in the following location: %s\n", full_path);
+	  printf("%s: found in the following location %s\n", argv[arg_i], full_path);
 	  found_flag = 1;
 	  break;
 	}
       i++;
     }
-  if (found_flag = 0)
+  if (found_flag == 0)
     {
       printf("%s: not found\n", argv[arg_i]);
     }
