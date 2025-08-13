@@ -54,6 +54,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 				}
 				/* format string name=value in list */
 				snprintf(environ[i], newlen, "%s=%s", name, value);
+				printf("Overwrite is 1, env var overwritten");
 				return (0);
 			}
 
