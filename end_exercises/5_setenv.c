@@ -6,6 +6,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
+extern char **environ;
+
 /**
  * _setenv - changes/adds an environment variable
  * @name: name of the env var
@@ -72,7 +74,7 @@ int _setenv(const char *name, const char *value, int overwrite)
 	newlen = length + strlen(value) + 2; /* find length of name+=+value+nullterm */
 	/* malloc space and crearte new name=value string */
 	char *new_var = malloc(newlen);
-	if (new_len == NULL)
+	if (new_var == NULL)
 	{
 		printf("Error: malloc fail\n");
 		return (1);
