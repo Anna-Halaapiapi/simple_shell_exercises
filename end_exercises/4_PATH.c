@@ -12,7 +12,6 @@ typedef struct node {
     struct node *next;
 } node_t;
 
-
 /**
  * splitstring - splits a string into indivual tokens/words
  * fullstring: the full line to split into tokens
@@ -52,6 +51,27 @@ char **splitstring(char *fullstring)
 }
 
 /**
+ * free_list - free linked list
+ * 
+ *
+ * Return: void
+ */
+
+void free_list(node_t *head)
+{
+	node_t *currentnode;
+
+	while (head != NULL)
+	{
+		currentnode = head->next;
+		free(head->dir);
+		free(head);
+		head = currentnode;
+	}
+}
+
+
+/**
  * build_list - split values (dirs) in PATH
  * build a linked list from PATH values
  *
@@ -83,6 +103,7 @@ node_t *build_list(void)
 		if (newnode == NULL)/* check for malloc fail */
 		{
 			printf("Error: malloc fail");
+			free_list(head);
 			return (NULL);
 		}
 
