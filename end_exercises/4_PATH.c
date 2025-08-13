@@ -6,6 +6,13 @@
 #include <string.h>
 #include <sys/stat.h>
 
+
+typedef struct node {
+    char *dir;
+    struct node *next;
+} node_t;
+
+
 /**
  * splitstring - splits a string into indivual tokens/words
  * fullstring: the full line to split into tokens
@@ -45,30 +52,56 @@ char **splitstring(char *fullstring)
 }
 
 /**
- * print_dir - prints each directory in PATH
- * 
- * Return: 0 (success) or 1 (fail)
+ * build_list - split values (dirs) in PATH
+ * build a linked list from PATH values
+ *
+ * Return: head of list
  */
 
-int main(void)
+node_t *build_list(void)
 {
-  int i = 0; /* loop counter */
-  char **path_array; /* store PATH array */
-  char *envpath = getenv("PATH"); /* get values of PATH */
+	char **path_array; /* hold path array */
+	char *envpath = getenv("PATH"); /* get dirs in PATH */
+	node_t *head = NULL; /* node for head of list */
+	node_t *tail = NULL; /* node for end of list */
+	node_t *newnode = NULL; /* node to create new node */
 
-  if (envpath == NULL)
-    {
-      printf("Error: PATH values are NULL");
-      return (1);
-    }
-  
-  path_array = splitstring(envpath); /* split PATH values into an array */
+	if (envpath == NULL)
+	{
+		printf("Error");
+		return (1);
+	}
 
-  while (path_array[i] != NULL) /* loop through the path array until end */
-    {
-      printf("%s\n", path_array[i]); /* print each directory in path array */
-      i++;
-    }
-  free(path_array);
-  return (0);
+	path_array = splitstring(envpath); /* split PATH values into an array */
+
+	while (path_array[i] != NULL) /* loop through PATH vals/dirs */
+	{
+		/* make a node */
+		newnode = malloc(sizeof(node_t));
+
+		if (newnode == NULL)/* check for malloc fail */
+		{
+			printf("Error: malloc fail");
+			return (NULL);
+		}
+
+		/* set node vals */
+		newnode->dir = strdup(path_array[i]);
+		newnode->next = NULL
+
+			if (head == NULL)
+			{
+				head = newnode;
+				tail = newnode;
+			}
+
+			else
+			{
+				tail->next = newnode;
+				tail = newnode;
+			}
+		i++;
+	}
+	free(path_array);
+	return (head);
 }
