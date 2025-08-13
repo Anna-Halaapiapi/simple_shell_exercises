@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 /**
  * splitstring - splits a string into indivual tokens/words
@@ -58,12 +59,17 @@ int main(int argc, char **argv)
   int i = 0;
   char full_path[1024]; /* biffer to build full path */
   
-  /* handle getenv error */
+  /* handle errors */
   if (envpath == NULL)
   {
     perror("Error - path is NULL");
     return (1);
   }
+  if (argc < 2)
+    {
+      printf("Error: incorrect usage. Correct usage is: %s filename\n", argv[0]);
+      return (1);
+    }
 
   /* split path into directories */
   path_array = splitstring(envpath);
@@ -81,12 +87,13 @@ int main(int argc, char **argv)
       if (stat(full_path, &st) == 0)
 	{
 	  /* print found and full path */
-	  printf("Found: %s\n", full_path);
+	  printf("File found in the following location: %s\n", full_path);
 	  return (0);
 	}
       i++;
     }
   /* if not found in loop- print not found */
   printf("File not found\n");
+  free(path_array);
   return (1);
 }
