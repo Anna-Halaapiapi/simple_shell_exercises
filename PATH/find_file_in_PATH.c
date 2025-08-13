@@ -56,7 +56,7 @@ int main(int argc, char **argv)
   char **path_array;
   /* get PATH env var */
   char *envpath = getenv("PATH");
-  int i = 0;
+  int i, arg_i = 1, found_flag = 0;
   char full_path[1024]; /* biffer to build full path */
   
   /* handle errors */
@@ -73,6 +73,12 @@ int main(int argc, char **argv)
 
   /* split path into directories */
   path_array = splitstring(envpath);
+
+  while (arg_i < argc) /* loop through multiple filenames */
+    {
+      found_flag = 0;
+      i = 0;
+      
   /* loop through each path in path_array */
   while (path_array[i] != NULL)
     {
@@ -88,12 +94,17 @@ int main(int argc, char **argv)
 	{
 	  /* print found and full path */
 	  printf("File found in the following location: %s\n", full_path);
-	  return (0);
+	  found_flag = 1;
+	  break;
 	}
       i++;
     }
-  /* if not found in loop- print not found */
-  printf("File not found\n");
+  if (found_flag = 0)
+    {
+      printf("%s: not found\n", argv[arg_i]);
+    }
+  arg_i++;
+    }
   free(path_array);
   return (1);
 }
