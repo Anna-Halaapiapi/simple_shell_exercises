@@ -55,6 +55,12 @@ int main(void)
   int i = 0; /* loop counter */
   char **path_array; /* store PATH array */
   char *envpath = getenv("PATH"); /* get values of PATH */
+
+  if (envpath == NULL)
+    {
+      printf("Error: PATH values are NULL");
+      return (1);
+    }
   
   path_array = splitstring(envpath); /* split PATH values into an array */
 
@@ -63,6 +69,6 @@ int main(void)
       printf("%s\n", path_array[i]); /* print each directory in path array */
       i++;
     }
-  
+  free(path_array);
   return (0);
 }
