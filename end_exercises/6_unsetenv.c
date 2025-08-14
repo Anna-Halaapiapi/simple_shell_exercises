@@ -20,9 +20,9 @@ int _unsetenv(const char *name)
   int i = 0, j; /* track index position in env var array */
   int name_length = strlen(name); /* store length of name param */
 
-if (name == NULL) /* check for NULL */
+if (name == NULL || *name == '\0' || strchr(name, '=') != NULL) /* check for invalid inputs */
 {
-printf("Error: name is NULL\n");
+printf("Error: invalid input\n");
 return (1);
 }
 
@@ -31,7 +31,6 @@ while (environ[i] != NULL) /* loop through env var array */
     /* if env var found */
  if (strncmp(name, environ[i], name_length) == 0 && environ[i][name_length] == '=')
  {
-    free(environ[i]); /* free existing env var */
     j = i;
     while (environ[j] != NULL) /* loop through rest of array */
     {
