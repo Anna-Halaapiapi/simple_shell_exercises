@@ -17,7 +17,7 @@ extern char **environ; /* global var */
 
 int _unsetenv(const char *name)
 {
-  int i = 0; /* track index position in env var array */
+  int i = 0, j; /* track index position in env var array */
   int name_length = strlen(name); /* store length of name param */
 
 if (name == NULL) /* check for NULL */
@@ -32,10 +32,11 @@ while (environ[i] != NULL) /* loop through env var array */
  if (strncmp(name, environ[i], name_length) == 0 && environ[i][name_length] == '=')
  {
     free(environ[i]); /* free existing env var */
-    while (environ[i] != NULL) /* loop through rest of array */
+    j = i;
+    while (environ[j] != NULL) /* loop through rest of array */
     {
-        environ[i] = environ[i + 1]; /* move everything left by 1 */
-        i++;
+        environ[j] = environ[j + 1]; /* move everything left by 1 */
+        j++;
     }  
     environ[i] = NULL; /* add NULL to end of array */
     printf("Success: environment variable found and deleted\n");
